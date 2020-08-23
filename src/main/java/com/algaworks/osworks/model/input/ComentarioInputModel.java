@@ -1,4 +1,4 @@
-package com.algaworks.osworks.model;
+package com.algaworks.osworks.model.input;
 
 import lombok.Data;
 

@@ -32,7 +32,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var problema = Problema
 		.builder()
 		.status( HttpStatus.NOT_FOUND.value() )
-		.datahora( OffsetDateTime	.now() )
+		.datahora( OffsetDateTime.now() )
 		.titulo(ex.getMessage())
 		.build();
 		return super.handleExceptionInternal( ex , problema , new HttpHeaders() , HttpStatus.NOT_FOUND , request );
@@ -44,7 +44,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var problema = Problema
 		.builder()
 		.status( HttpStatus.BAD_REQUEST.value() )
-		.datahora( OffsetDateTime	.now() )
+		.datahora( OffsetDateTime.now() )
 		.titulo(ex.getMessage())
 		.build();
 		return super.handleExceptionInternal( ex , problema , new HttpHeaders() , HttpStatus.BAD_REQUEST , request );

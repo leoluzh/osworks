@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,11 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.osworks.assemblers.ClienteModelAssembler;
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
 import com.algaworks.osworks.domain.service.ClienteService;
-import com.algaworks.osworks.model.ClienteInputModel;
 import com.algaworks.osworks.model.ClienteModel;
+import com.algaworks.osworks.model.input.ClienteInputModel;
 
 @RestController
 @RequestMapping("/v1/clientes")
@@ -40,9 +42,12 @@ public class ClienteController implements Serializable {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
+	private ClienteModelAssembler  clienteModelAssembler;
+	
 	@GetMapping
-	public List<Cliente> listar(){
-		return repository.findAll();	
+	public ResponseEntity<CollectionModel<ClienteModel>> listar(){
+		return ResponseEntity.ok( toCollection( repository.findAll() ) );	
 	}
 	
 	@GetMapping("{id}")
@@ -84,7 +89,11 @@ public class ClienteController implements Serializable {
 	}
 	
 	private ClienteModel toModel( Cliente entity ) {
-		return this.modelMapper.map( entity , ClienteModel.class );
+		return this.clienteModelAssembler.toModel(entity);
+	}
+	
+	private CollectionModel<ClienteModel> toCollection( List<Cliente> entities ){
+		return this.clienteModelAssembler.toCollectionModel(entities);
 	}
 	
 }

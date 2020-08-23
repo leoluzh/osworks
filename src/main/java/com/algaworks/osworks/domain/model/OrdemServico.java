@@ -66,8 +66,7 @@ public class OrdemServico implements Serializable{
 	@JsonProperty( access = Access.READ_ONLY )
 	private OffsetDateTime dataFinalizacao;
 
-	
-	@OneToMany(mappedBy="ordemService")	
+	@OneToMany( mappedBy = "ordemServico" )
 	private List<Comentario> comentarios = new ArrayList<>();
 
 	public void add( Comentario comentario ) {
